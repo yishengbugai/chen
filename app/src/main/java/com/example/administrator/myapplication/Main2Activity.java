@@ -26,15 +26,11 @@ public  class Main2Activity extends AppCompatActivity implements View.OnClickLis
         Button btn=findViewById(R.id.button);
         btn.setOnClickListener(this);
         btn.setText("确认");
-
-    }
-
-
+        }
     @Override
     public void onClick(View v) {
-
         float number = Float.valueOf(edit.getText().toString());
-        int mess=(int)(number*33.8);
+        int mess=(int)(number*1.8+32);
         out2.setText("华氏温度为"+mess);
     }
 }
