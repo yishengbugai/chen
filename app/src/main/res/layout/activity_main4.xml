@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="372dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -30,7 +30,7 @@
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="429dp"
-                android:layout_height="match_parent"
+                android:layout_height="74dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
@@ -48,6 +48,7 @@
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:text="+3POINTS" />
 
             <Button
@@ -56,6 +57,7 @@
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:text="+2POINTS" />
 
             <Button
@@ -64,12 +66,13 @@
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:text="+1POINTS" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="370dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -96,7 +99,7 @@
                 android:layout_weight="2"
 
                 android:text="0"
-                android:textSize="36sp" />
+                android:textSize="48sp" />
 
             <Button
                 android:id="@+id/button21"
@@ -104,6 +107,7 @@
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:text="+3POINTS" />
 
             <Button
@@ -112,6 +116,7 @@
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:text="+2POINTS" />
 
             <Button
@@ -120,12 +125,13 @@
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:layout_weight="1"
                 android:text="+1POINTS" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

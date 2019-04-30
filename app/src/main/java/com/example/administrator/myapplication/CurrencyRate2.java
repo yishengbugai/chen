@@ -17,13 +17,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class CurrencyRate2 extends AppCompatActivity implements Runnable{
     EditText rmb;
@@ -58,8 +60,16 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
          handler = new Handler(){
             public void handleMessage(Message msg){
                 if(msg.what==5){
-                    String str=(String)msg.obj;
-                    Log.i(TAG,"handlemessage:getmessage msg="+str);
+                    Bundle bdl=(Bundle)msg.obj;
+                    dollarRate=bdl.getFloat("dollar-rate");
+                    wonRate=bdl.getFloat("won-rate");
+                    euroRate=bdl.getFloat("euro-rate");
+
+                    Log.i(TAG, "handleMessage: dollarRate="+dollarRate);
+                    Log.i(TAG, "handleMessage: wonRate="+wonRate);
+                    Log.i(TAG, "handleMessage: euroRate="+euroRate);
+
+                    Toast.makeText(CurrencyRate2.this, "汇率已更新", Toast.LENGTH_SHORT).show();
                 }
                 super.handleMessage(msg);
             }
@@ -167,26 +177,70 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
                 e.printStackTrace();
             }
         }
+        //用于保存获取的汇率
+        Bundle bun=new Bundle();
         //获取Msg对象，用于返回主线程
-        Message msg=handler.obtainMessage(5);
-        //msg.what =5;
-        msg.obj="hello for run()";
-        handler.sendMessage(msg);
+
 
         //获得网络数据
-        URL url= null;
+       /* URL url= null;
         try {
-            url = new URL("http://www.haigouzu.com/Price/HK_ExRate.aspx");
+            url = new URL("http://www.usd-cny.com/bankofchina.htm");
             HttpURLConnection http= (HttpURLConnection)url.openConnection();
             InputStream in= http.getInputStream();
 
-            String hrml=inputStream2String(in);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }catch (IOException e){
+            String html=inputStream2String(in);
+            Document doc = Jsoup.parse(html);
+        }
+        catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        catch (IOException e){
+            e.printStackTrace();
+        }  */
+        Document doc=null;
+       try{
+          doc = Jsoup.connect("http://www.usd-cny.com/bankofchina.htm").get();
+             Log.i(TAG, "run: "+doc.title());
+            Elements tables=doc.getElementsByTag("Table");
+           /* for (Element table: tables){
+                Log.i(TAG, "run: table="+table);
+
+            }*/
+           Element table6= tables.get(0);
+           Log.i(TAG, "run: table6="+table6);
+           //获取TD中的数据
+           Elements tds=table6.getElementsByTag("td");
+           for(int i=0;i<tds.size();i+=6){
+               Element td1=tds.get(i);
+               Element td2=tds.get(i+5);
+               Log.i(TAG, "run:"+td1.text()+"==>"+td2.text());
+            if("美元".equals(td1.text())){
+                bun.putFloat("dollar-rate",100f/Float.parseFloat(td2.text()));
+            }
+               else if("韩元".equals(td1.text())){
+                   bun.putFloat("won-rate",100f/Float.parseFloat(td2.text()));
+               }
+               else if("欧元".equals(td1.text())){
+                   bun.putFloat("euro-rate",100f/Float.parseFloat(td2.text()));
+               }
+           }
+
+          /* for(Element td:tds){
+               Log.i(TAG, "run: tds"+td);
+
+           }*/
+        }
+        catch(IOException e){
+           e.printStackTrace();
+        }
+            //bundle 中保存所获取的汇率
+            //获取msg对象，用于返回主线程
+        Message msg=handler.obtainMessage(5);
+       //msg.what=5;
+       // msg1.obj="hello for run";
+        msg.obj=bun;
+        handler.sendMessage(msg);
 
     }
     //inputStream转化成String

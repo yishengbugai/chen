@@ -1,14 +1,13 @@
 package com.example.administrator.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public  class MainActivity4 extends AppCompatActivity implements View.OnClickListener {
-   TextView out1,out2;
+    TextView out1,out2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,7 +15,7 @@ public  class MainActivity4 extends AppCompatActivity implements View.OnClickLis
 
         out2 = (TextView)findViewById(R.id.textView22);
         out1 = (TextView)findViewById(R.id.textView12);
-        Button btn4=findViewById(R.id.button4);
+        Button btn6=findViewById(R.id.button6);
         Button btn11=findViewById(R.id.button11);
         Button btn12=findViewById(R.id.button12);
         Button btn13=findViewById(R.id.button13);
@@ -30,7 +29,7 @@ public  class MainActivity4 extends AppCompatActivity implements View.OnClickLis
         btn21.setOnClickListener(this);
         btn22.setOnClickListener(this);
         btn23.setOnClickListener(this);
-        btn4.setOnClickListener(this);
+        btn6.setOnClickListener(this);
 
     }
     @Override
@@ -61,10 +60,9 @@ public  class MainActivity4 extends AppCompatActivity implements View.OnClickLis
             int newscore=Integer.parseInt(a)+1;
             out2.setText(""+newscore);
         }
-        else if (v.getId()==R.id.button4)
+        else if (v.getId()==R.id.button6)
         {int newscore=0;
             out1.setText(""+newscore);
             out2.setText(""+newscore); }
     }
 }
-

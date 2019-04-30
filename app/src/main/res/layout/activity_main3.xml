@@ -70,12 +70,12 @@
             android:text="+2POINTS" />
 
         <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="+1POINTS" />
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="+1POINTS" />
     </LinearLayout>
 
 </RelativeLayout>

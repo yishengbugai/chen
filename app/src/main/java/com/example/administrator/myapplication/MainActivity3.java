@@ -1,10 +1,9 @@
 package com.example.administrator.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public  class MainActivity3 extends AppCompatActivity implements View.OnClickListener {
@@ -25,25 +24,25 @@ public  class MainActivity3 extends AppCompatActivity implements View.OnClickLis
         btn4.setOnClickListener(this);
 
     }
-        @Override
-       public void onClick(View v) {
-            String a = (String)out4.getText();
+    @Override
+    public void onClick(View v) {
+        String a = (String)out4.getText();
 
-            if (v.getId()==R.id.button1){
-                   int newscore=Integer.parseInt(a)+3;
-                out4.setText(""+newscore);
-                }
-            else if (v.getId()==R.id.button2){
-                int newscore=Integer.parseInt(a)+2;
-                out4.setText(""+newscore);
-                 }
-            else if (v.getId()==R.id.button3){
-                int newscore=Integer.parseInt(a)+1;
-                out4.setText(""+newscore);
-             }
-            else if (v.getId()==R.id.button4)
-                {int newscore=0;
-                 out4.setText(""+newscore); }
+        if (v.getId()==R.id.button1){
+            int newscore=Integer.parseInt(a)+3;
+            out4.setText(""+newscore);
+        }
+        else if (v.getId()==R.id.button2){
+            int newscore=Integer.parseInt(a)+2;
+            out4.setText(""+newscore);
+        }
+        else if (v.getId()==R.id.button3){
+            int newscore=Integer.parseInt(a)+1;
+            out4.setText(""+newscore);
+        }
+        else if (v.getId()==R.id.button4)
+        {int newscore=0;
+            out4.setText(""+newscore); }
 
     }
 }
