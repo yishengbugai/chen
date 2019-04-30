@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CurrencyRate2 extends AppCompatActivity implements Runnable{
     EditText rmb;
@@ -34,6 +37,7 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
     float dollarRate=0.0f;
     float euroRate=0.0f;
     float wonRate=0.0f;
+    String updateDate ="";
     Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +52,31 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
         dollarRate = sharedPreferences.getFloat("dollar_RATE",0.0f);
         euroRate = sharedPreferences.getFloat("euro_RATE",0.0f);
         wonRate = sharedPreferences.getFloat("won_RATE",0.0f);
+        updateDate=sharedPreferences.getString("update_date","");
+
+        //获取当前系统时间
+        Date today= Calendar.getInstance().getTime();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        final String todayStr =sdf.format(today);
+
 
         Log.i(TAG,"onCreate: sp dollarRate" + dollarRate);
         Log.i(TAG,"onCreate: sp euroRate" + euroRate);
         Log.i(TAG,"onCreate: sp wonRate" + wonRate);
+        Log.i(TAG,"onCreate: sp updatedate=" + updateDate);
+        Log.i(TAG,"onCreate: sp updatedate=" + todayStr);
 
-        //开启子线程
-        Thread t = new Thread(this);
-        t.start();
+        //判断时间
+        if(!todayStr.equals(updateDate)){
+            Log.i(TAG,"onCreate:  需要更新=" );
+            //开启子线程
+            Thread t = new Thread(this);
+            t.start();
+        }else {
+            Log.i(TAG, "onCreate:  不需要更新=");
+        }
+
+
 //????hanlder为什么可以重写
          handler = new Handler(){
             public void handleMessage(Message msg){
@@ -68,6 +89,16 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
                     Log.i(TAG, "handleMessage: dollarRate="+dollarRate);
                     Log.i(TAG, "handleMessage: wonRate="+wonRate);
                     Log.i(TAG, "handleMessage: euroRate="+euroRate);
+
+                    //保存更新的日期
+                    SharedPreferences sharedPreferences =getSharedPreferences("myrate",Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sharedPreferences.edit();
+                    editor.putString("update_date",todayStr);
+                    editor.putFloat("dollar_RATE",dollarRate);
+                    editor.putFloat("euro_RATE",euroRate);
+                    editor.putFloat("won_RATE",wonRate);
+                    editor.apply();
+
 
                     Toast.makeText(CurrencyRate2.this, "汇率已更新", Toast.LENGTH_SHORT).show();
                 }
@@ -198,43 +229,9 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
         catch (IOException e){
             e.printStackTrace();
         }  */
-        Document doc=null;
-       try{
-          doc = Jsoup.connect("http://www.usd-cny.com/bankofchina.htm").get();
-             Log.i(TAG, "run: "+doc.title());
-            Elements tables=doc.getElementsByTag("Table");
-           /* for (Element table: tables){
-                Log.i(TAG, "run: table="+table);
+        getFromURL(bun);
 
-            }*/
-           Element table6= tables.get(0);
-           Log.i(TAG, "run: table6="+table6);
-           //获取TD中的数据
-           Elements tds=table6.getElementsByTag("td");
-           for(int i=0;i<tds.size();i+=6){
-               Element td1=tds.get(i);
-               Element td2=tds.get(i+5);
-               Log.i(TAG, "run:"+td1.text()+"==>"+td2.text());
-            if("美元".equals(td1.text())){
-                bun.putFloat("dollar-rate",100f/Float.parseFloat(td2.text()));
-            }
-               else if("韩元".equals(td1.text())){
-                   bun.putFloat("won-rate",100f/Float.parseFloat(td2.text()));
-               }
-               else if("欧元".equals(td1.text())){
-                   bun.putFloat("euro-rate",100f/Float.parseFloat(td2.text()));
-               }
-           }
-
-          /* for(Element td:tds){
-               Log.i(TAG, "run: tds"+td);
-
-           }*/
-        }
-        catch(IOException e){
-           e.printStackTrace();
-        }
-            //bundle 中保存所获取的汇率
+        //bundle 中保存所获取的汇率
             //获取msg对象，用于返回主线程
         Message msg=handler.obtainMessage(5);
        //msg.what=5;
@@ -243,6 +240,47 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
         handler.sendMessage(msg);
 
     }
+
+    private void getFromURL(Bundle bun) {
+        Document doc=null;
+        try{
+           doc = Jsoup.connect("http://www.usd-cny.com/bankofchina.htm").get();
+              Log.i(TAG, "run: "+doc.title());
+             Elements tables=doc.getElementsByTag("Table");
+            /* for (Element table: tables){
+                 Log.i(TAG, "run: table="+table);
+
+             }*/
+            Element table6= tables.get(0);
+            Log.i(TAG, "run: table6="+table6);
+            //获取TD中的数据
+            Elements tds=table6.getElementsByTag("td");
+            for(int i=0;i<tds.size();i+=6){
+                Element td1=tds.get(i);
+                Element td2=tds.get(i+5);
+                Log.i(TAG, "run:"+td1.text()+"==>"+td2.text());
+             if("美元".equals(td1.text())){
+                 bun.putFloat("dollar-rate",100f/Float.parseFloat(td2.text()));
+             }
+                else if("韩元".equals(td1.text())){
+                    bun.putFloat("won-rate",100f/Float.parseFloat(td2.text()));
+                }
+                else if("欧元".equals(td1.text())){
+                    bun.putFloat("euro-rate",100f/Float.parseFloat(td2.text()));
+                }
+            }
+
+           /* for(Element td:tds){
+                Log.i(TAG, "run: tds"+td);
+
+            }*/
+         }
+         catch(IOException e){
+            e.printStackTrace();
+         }
+    }
+
+
     //inputStream转化成String
     private String inputStream2String (InputStream inputStream)throws IOException {
             final int buffersize=1024;
