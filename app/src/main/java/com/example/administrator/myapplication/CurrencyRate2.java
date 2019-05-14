@@ -102,6 +102,7 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
 
                     Toast.makeText(CurrencyRate2.this, "汇率已更新", Toast.LENGTH_SHORT).show();
                 }
+
                 super.handleMessage(msg);
             }
         };
@@ -157,7 +158,6 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
         return true;
     }
 
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.menu_set){
             Intent hello= new Intent(this,config.class);
@@ -169,6 +169,10 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
             Log.i("san","openOne:won_rate_key "+wonRate);
             Intent web=new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.swufe.edu.cn"));
             startActivityForResult(hello,1);
+        }else if(item.getItemId()==R.id.menu_set_label){
+            //打开列表窗口
+            Intent list= new Intent(this,Mylist2Activity.class);
+            startActivity(list);
         }
         return super.onOptionsItemSelected(item);
     }

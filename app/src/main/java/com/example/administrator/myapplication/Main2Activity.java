@@ -1,8 +1,7 @@
 package com.example.administrator.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +25,7 @@ public  class Main2Activity extends AppCompatActivity implements View.OnClickLis
         Button btn=findViewById(R.id.button);
         btn.setOnClickListener(this);
         btn.setText("确认");
-        }
+    }
     @Override
     public void onClick(View v) {
         float number = Float.valueOf(edit.getText().toString());
@@ -34,4 +33,3 @@ public  class Main2Activity extends AppCompatActivity implements View.OnClickLis
         out2.setText("华氏温度为"+mess);
     }
 }
-

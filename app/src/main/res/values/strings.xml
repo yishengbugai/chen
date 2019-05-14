@@ -2,5 +2,6 @@
     <string name="app_name">Hello</string>
     <string name="str">hello kitty</string>
     <string name="str2">input your name</string>
+    <string name="label_open_list">Openlist</string>
 
 </resources>
