@@ -27,7 +27,7 @@ public class Mylist2Activity extends ListActivity implements Runnable, AdapterVi
     Handler handler;
     private List<HashMap<String, String>> listItems; // 存放文字、图片信息
     private SimpleAdapter listItemAdapter; // 适配器
-    private MyAdapter MyAdapter;
+
     String  TAG="Mylist2Activity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

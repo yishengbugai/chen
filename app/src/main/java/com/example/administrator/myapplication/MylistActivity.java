@@ -25,7 +25,7 @@ public class MylistActivity extends AppCompatActivity implements AdapterView.OnI
            for (int i=0;i<10;i++       ){
                data.add("item"+i);
            }
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);  //构造adapter  ListAdapter 和ArrayAdapter 的关系与自定义列表的区别
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, data);  //构造adapter  ListAdapter 和ArrayAdapter 的关系与自定义列表的区别
         listView.setAdapter(adapter);  //讲adapter与布局控件对应起来
         listView.setEmptyView(findViewById(R.id.nodata));
         listView.setOnItemClickListener(this);

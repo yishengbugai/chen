@@ -171,8 +171,22 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
             startActivityForResult(hello,1);
         }else if(item.getItemId()==R.id.menu_set_label){
             //打开列表窗口
-            Intent list= new Intent(this,Mylist2Activity.class);
+            Intent list= new Intent(this,RateListActivity.class);
             startActivity(list);
+            //Intent list= new Intent(this,Mylist2Activity.class);
+            //startActivity(list);
+            //测试数据库
+//            RateItem item1=new RateItem("aaa","1");
+//            RateManager manager=new RateManager(this);
+//            manager.add(item1);
+//            manager.add(new RateItem("222","22"));
+//            Log.i(TAG, "onOptionsItemSelected: 写入数据完毕");
+//
+//            //插叙所有数据
+//            List<RateItem> testlist=manager.listAll();
+//            for(RateItem i:testlist){
+//                Log.i(TAG, "onOptionsItemSelected: 取出数据name="+i.getCurName());
+//            }
         }
         return super.onOptionsItemSelected(item);
     }
