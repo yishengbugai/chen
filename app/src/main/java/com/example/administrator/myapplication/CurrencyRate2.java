@@ -175,7 +175,7 @@ public class CurrencyRate2 extends AppCompatActivity implements Runnable{
             startActivity(list);
             //Intent list= new Intent(this,Mylist2Activity.class);
             //startActivity(list);
-            //测试数据库
+//            测试数据库
 //            RateItem item1=new RateItem("aaa","1");
 //            RateManager manager=new RateManager(this);
 //            manager.add(item1);
